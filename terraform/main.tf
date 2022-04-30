@@ -18,23 +18,9 @@ resource "aws_s3_object" "apod2-index" {
   source = "../index.html"
 }
 
-resource "aws_iam_policy" "apod2" {
-  name = "terraform-policy"
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect   = "Allow"
-        Action   = "*"
-        Resource = "*"
-      }
-    ]
-  })
-}
-
 resource "aws_iam_role" "apod2" {
   name                = "terraform-role"
-  managed_policy_arns = [aws_iam_policy.apod2.arn]
+  managed_policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess"]
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
