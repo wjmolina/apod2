@@ -9,6 +9,7 @@ resource "aws_s3_object" "apod2-lambda" {
   bucket = aws_s3_bucket.apod2.id
   key    = "lambda-${dirname(each.value)}"
   source = "../lambda/${dirname(each.value)}/package.zip"
+  etag   = filebase64sha256("../lambda/${dirname(each.value)}/package.zip")
 }
 
 resource "aws_s3_object" "apod2-index" {

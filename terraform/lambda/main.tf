@@ -5,7 +5,7 @@ resource "aws_lambda_function" "apod" {
   runtime          = "python3.9"
   handler          = "lambda.handler"
   role             = var.role
-  source_code_hash = filebase64sha256("../lambda/${var.function_name}/package.sha1")
+  source_code_hash = filebase64sha256("../lambda/${var.function_name}/package.zip")
 }
 
 resource "aws_apigatewayv2_integration" "apod" {
