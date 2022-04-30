@@ -1,27 +1,23 @@
 variable "s3_bucket" {
-    type = string
+  type = string
 }
 
 variable "s3_key" {
-    type = string
+  type = string
 }
 
 variable "function_name" {
-    type = string
-}
-
-variable "source_code_hash" {
-    type = string
+  type = string
 }
 
 variable "role" {
-    type = string
+  type = string
 }
 
-variable "source_arn" {
-    type = string
+variable "execution_arn" {
+  type = string
 }
 
 variable "api_id" {
-    type = string
+  type = string
 }

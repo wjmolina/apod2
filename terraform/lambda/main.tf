@@ -1,11 +1,10 @@
 resource "aws_lambda_function" "apod" {
-  function_name    = "apod2-${var.function_name}"
-  s3_bucket        = var.s3_bucket
-  s3_key           = var.s3_key
-  runtime          = "python3.9"
-  handler          = "${var.function_name}.handler"
-  source_code_hash = var.source_code_hash
-  role             = var.role
+  function_name = "apod2-${var.function_name}"
+  s3_bucket     = var.s3_bucket
+  s3_key        = var.s3_key
+  runtime       = "python3.9"
+  handler       = "${var.function_name}.handler"
+  role          = var.role
 }
 
 resource "aws_apigatewayv2_integration" "apod" {
@@ -20,7 +19,7 @@ resource "aws_lambda_permission" "apod" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.apod.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = var.source_arn
+  source_arn    = "${var.execution_arn}/*/*"
 }
 
 resource "aws_apigatewayv2_route" "apod" {

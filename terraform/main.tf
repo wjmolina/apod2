@@ -35,15 +35,16 @@ resource "aws_apigatewayv2_api" "apod2" {
 }
 
 module "lambda" {
-  for_each         = fileset("${path.module}/../lambdas", "*.py")
-  source           = "./lambda"
-  function_name    = trimsuffix(each.key, ".py")
-  s3_bucket        = aws_s3_bucket.apod2.id
-  s3_key           = aws_s3_object.apod2.key
-  role             = aws_iam_role.apod2.arn
-  api_id           = aws_apigatewayv2_api.apod2.id
-  source_code_hash = data.archive_file.apod2.output_base64sha256
-  source_arn       = "${aws_apigatewayv2_api.apod2.execution_arn}/*/*"
+  for_each = fileset("${path.module}/../lambdas", "*.py")
+
+  source = "./lambda"
+
+  function_name = trimsuffix(each.key, ".py")
+  s3_bucket     = aws_s3_bucket.apod2.id
+  s3_key        = aws_s3_object.apod2.key
+  role          = aws_iam_role.apod2.arn
+  api_id        = aws_apigatewayv2_api.apod2.id
+  execution_arn = aws_apigatewayv2_api.apod2.execution_arn
 }
 
 resource "aws_apigatewayv2_stage" "apod2" {
