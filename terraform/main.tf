@@ -26,7 +26,7 @@ resource "aws_iam_role" "apod2" {
       Action = "sts:AssumeRole"
       Sid    = ""
       Principal = {
-        Service = "arn:aws:iam::470466310686:user/terraform-service-account"
+        AWS = "arn:aws:iam::470466310686:user/terraform-service-account"
       }
     }]
   })
