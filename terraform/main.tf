@@ -21,6 +21,7 @@ resource "null_resource" "apod2-create" {
   }
   provisioner "local-exec" {
     command = <<EOT
+      pwd
       cd ../lambdas
       pip install --target imports $(<requirements.txt)
       cd imports
@@ -44,11 +45,6 @@ data "archive_file" "apod2" {
 resource "aws_s3_bucket" "apod2" {
   bucket        = "apod2"
   force_destroy = true
-}
-
-resource "aws_s3_bucket_acl" "apod2" {
-  bucket = aws_s3_bucket.apod2.id
-  acl    = "private"
 }
 
 resource "aws_s3_object" "apod2" {
