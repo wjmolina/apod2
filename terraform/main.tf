@@ -41,6 +41,10 @@ module "lambda" {
   role          = aws_iam_role.apod2.arn
   api_id        = aws_apigatewayv2_api.apod2.id
   execution_arn = aws_apigatewayv2_api.apod2.execution_arn
+
+  depends_on = [
+    aws_s3_object.apod2
+  ]
 }
 
 resource "aws_apigatewayv2_stage" "apod2" {
