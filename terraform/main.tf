@@ -31,7 +31,7 @@ resource "aws_iam_role" "apod2" {
       }, {
       Action   = "s3:GetObject"
       Effect   = "Allow"
-      Resource = "arn:aws:s3:::apod2"
+      Resource = ["arn:aws:s3:::apod2"]
     }]
   })
 }
