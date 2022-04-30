@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "apod2" {
 }
 
 resource "aws_s3_object" "apod2" {
-  for_each = fileset("${path.module}/../lambda")
+  for_each = fileset("${path.module}/../lambda", "*")
 
   bucket = aws_s3_bucket.apod2.id
   key    = "lambda-${each.key}"
@@ -31,7 +31,7 @@ resource "aws_apigatewayv2_api" "apod2" {
 }
 
 module "lambda" {
-  for_each = fileset("${path.module}/../lambda")
+  for_each = fileset("${path.module}/../lambda", "*")
 
   source = "./lambda"
 
