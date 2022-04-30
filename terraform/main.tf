@@ -21,14 +21,13 @@ resource "null_resource" "apod2-create" {
   }
   provisioner "local-exec" {
     command = <<EOT
-      pwd
-      cd ../lambdas
-      pip install --target imports $(<requirements.txt)
-      cd imports
-      zip -r ../imports .
-      cd ..
-      zip -g imports *
-      unzip imports -d package
+cd ../lambdas
+pip install --target imports $(<requirements.txt)
+cd imports
+zip -r ../imports .
+cd ..
+zip -g imports *
+unzip imports -d package
     EOT
   }
 }
