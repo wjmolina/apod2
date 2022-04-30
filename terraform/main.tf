@@ -41,13 +41,8 @@ data "archive_file" "apod2" {
   ]
 }
 
-resource "random_pet" "apod2" {
-  prefix = "apod2"
-  length = 2
-}
-
 resource "aws_s3_bucket" "apod2" {
-  bucket        = random_pet.apod2.id
+  bucket        = "apod2"
   force_destroy = true
 }
 
