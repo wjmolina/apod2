@@ -19,22 +19,16 @@ resource "aws_s3_object" "apod2-index" {
 }
 
 resource "aws_iam_role" "apod2" {
+  name = "terraform-service-account-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Action = "sts:AssumeRole"
-      Sid    = ""
-      Principal = {
-        AWS = "arn:aws:iam::470466310686:user/terraform-service-account"
+    Statement = [
+      {
+        Effect    = "Allow"
+        Action    = "sts:AssumeRole"
+        Principal = { Service = "lambda.amazonaws.com" }
       }
-      }, {
-      Effect = "Allow",
-      Principal = {
-        Service = "lambda.amazonaws.com"
-      },
-      Action = "sts:AssumeRole"
-    }]
+    ]
   })
 }
 
