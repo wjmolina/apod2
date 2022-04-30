@@ -28,6 +28,12 @@ resource "aws_iam_role" "apod2" {
       Principal = {
         AWS = "arn:aws:iam::470466310686:user/terraform-service-account"
       }
+      }, {
+      Effect = "Allow",
+      Principal = {
+        Service = "lambda.amazonaws.com"
+      },
+      Action = "sts:AssumeRole"
     }]
   })
 }
