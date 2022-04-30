@@ -62,21 +62,6 @@ resource "aws_s3_object" "apod2" {
   source = data.archive_file.apod2.output_path
 }
 
-resource "null_resource" "apod2-clean" {
-  triggers = {
-    always_run = "${timestamp()}"
-  }
-  provisioner "local-exec" {
-    command = <<EOT
-      cd ../lambdas
-      rm -r package package.zip
-    EOT
-  }
-  depends_on = [
-    aws_s3_object.apod2
-  ]
-}
-
 resource "aws_iam_role" "apod2" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
