@@ -1,8 +1,8 @@
-name: Destroy Terraform
+name: Terraform Destroy
 on: workflow_dispatch
 jobs:
-  destroy-resources:
-    name: Destroy Resources
+  destroy:
+    name: Destroy
     runs-on: ubuntu-20.04
     defaults:
       run:
@@ -18,6 +18,20 @@ jobs:
           aws-region: us-east-1
           aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      - name: Prepare Lambda
+        run: |
+          cd ../lambda
+          for dir in */; do
+            cd $dir
+            if test -f requirements.txt; then
+              pip install --target package $(<requirements.txt)
+              cd package
+              zip -r ../package .
+              cd ..
+            fi
+            zip -g package *
+            cd ..
+          done
       - name: Terraform Init
         run: terraform init
       - name: Terraform Destroy

@@ -1,4 +1,4 @@
-name: Provision Terraform
+name: Terraform Apply
 on:
   push:
     branches:
@@ -7,8 +7,8 @@ on:
       - "!.github/**"
       - "!.gitignore"
 jobs:
-  provision-resources:
-    name: Provision Resources
+  apply:
+    name: Apply
     runs-on: ubuntu-20.04
     defaults:
       run:
