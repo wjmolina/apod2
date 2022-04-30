@@ -37,7 +37,7 @@ resource "aws_apigatewayv2_api" "apod2" {
 module "lambda" {
   for_each         = fileset("${path.module}/../lambdas", "*.py")
   source           = "./lambda"
-  function_name    = substr("${each.key}", 0, -3)
+  function_name    = trimsuffix(each.key, ".py")
   s3_bucket        = aws_s3_bucket.apod2.id
   s3_key           = aws_s3_object.apod2.key
   role             = aws_iam_role.apod2.arn
