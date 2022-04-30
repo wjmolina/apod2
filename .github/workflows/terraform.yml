@@ -37,11 +37,7 @@ jobs:
           done
       - name: Terraform Init
         run: terraform init
-      - name: Terraform Console
-        run: |
-          terraform console
-          fileset("${path.module}/../lambda", "**.py")
-      # - name: Terraform Plan
-      #   run: terraform plan
-      # - name: Terraform Apply
-      #   run: terraform apply --auto-approve
+      - name: Terraform Plan
+        run: terraform plan
+      - name: Terraform Apply
+        run: terraform apply --auto-approve
