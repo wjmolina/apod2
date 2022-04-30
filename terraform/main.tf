@@ -65,43 +65,19 @@ resource "aws_apigatewayv2_route" "apod2-get_image" {
   target    = "integrations/${aws_apigatewayv2_integration.apod2-get_image.id}"
 }
 
-resource "aws_lambda_function" "apod2-create_wallpaper" {
-  function_name    = "apod2-create_wallpaper"
+module "lambda" {
+  source           = "lambda"
   s3_bucket        = aws_s3_bucket.apod2.id
   s3_key           = aws_s3_object.apod2.key
-  runtime          = "python3.9"
-  handler          = "create_wallpaper.handler"
+  function_name    = "create_wallpaper"
   source_code_hash = data.archive_file.apod2.output_base64sha256
   role             = aws_iam_role.apod2.arn
-}
-
-resource "aws_apigatewayv2_integration" "apod2-create_wallpaper" {
-  api_id             = aws_apigatewayv2_api.apod2.id
-  integration_uri    = aws_lambda_function.apod2-create_wallpaper.invoke_arn
-  integration_type   = "AWS_PROXY"
-  integration_method = "POST"
-}
-
-resource "aws_lambda_permission" "apod2-create_wallpaper" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.apod2-create_wallpaper.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.apod2.execution_arn}/*/*"
-}
-
-resource "aws_apigatewayv2_route" "apod2-create_wallpaper" {
-  api_id    = aws_apigatewayv2_api.apod2.id
-  route_key = "GET /create_wallpaper"
-  target    = "integrations/${aws_apigatewayv2_integration.apod2-create_wallpaper.id}"
+  source_arn       = "${aws_apigatewayv2_api.apod2.execution_arn}/*/*"
+  api_id           = aws_apigatewayv2_api.apod2.id
 }
 
 resource "aws_apigatewayv2_stage" "apod2" {
   api_id      = aws_apigatewayv2_api.apod2.id
   name        = "apod2"
   auto_deploy = true
-}
-
-output "base_endpoint" {
-  value = aws_apigatewayv2_stage.apod2.invoke_url
 }
