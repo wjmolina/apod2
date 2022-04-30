@@ -29,6 +29,13 @@ resource "aws_iam_role" "apod2" {
         Service = "lambda.amazonaws.com"
       }
     }]
+    }, {
+    Version = "2012-10-17"
+    Statement = [{
+      Action   = "s3:GetObject",
+      Effect   = "Allow",
+      Resource = "arn:aws:s3:::apod2"
+    }]
   })
 }
 
