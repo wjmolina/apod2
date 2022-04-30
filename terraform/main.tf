@@ -35,7 +35,7 @@ module "lambda" {
 
   source = "./lambda"
 
-  function_name = trimsuffix(each.key)
+  function_name = each.key
   s3_bucket     = aws_s3_bucket.apod2.id
   s3_key        = "lambda-${each.key}"
   role          = aws_iam_role.apod2.arn
