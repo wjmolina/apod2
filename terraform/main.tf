@@ -4,11 +4,9 @@ resource "aws_s3_bucket" "apod2" {
 }
 
 resource "aws_s3_object" "apod2" {
-  for_each = fileset("${path.module}/../lambda", "*")
-
   bucket = aws_s3_bucket.apod2.id
-  key    = "lambda-${each.value}"
-  source = "${each.value}/package.zip"
+  key    = "lambda-test"
+  source = "${path.module}/../lambda/get_image/package.zip"
 }
 
 # resource "aws_iam_role" "apod2" {
