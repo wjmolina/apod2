@@ -26,10 +26,10 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - uses: actions/setup-python@v3
+      - name: Setup Pip
+        uses: actions/setup-python@v3
         with:
           python-version: "3.9"
-          cache: "pip"
 
       - name: Terraform Init
         run: terraform init
