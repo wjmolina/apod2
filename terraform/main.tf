@@ -22,16 +22,20 @@ resource "aws_iam_role" "apod2" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Action = "sts:AssumeRole"
       Effect = "Allow"
+      Action = "sts:AssumeRole"
       Sid    = ""
       Principal = {
         Service = "lambda.amazonaws.com"
       }
       }, {
-      Action   = "s3:GetObject"
       Effect   = "Allow"
+      Action   = "s3:ListBucket"
       Resource = ["arn:aws:s3:::apod2"]
+    }, {
+      Effect   = "Allow"
+      Action   = "s3:GetObject"
+      Resource = ["arn:aws:s3:::apod2/*"]
     }]
   })
 }
