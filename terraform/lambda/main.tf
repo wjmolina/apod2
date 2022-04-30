@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "apod" {
-  function_name = "apod2"
+  function_name = "apod2-${var.function_name}"
   s3_bucket     = var.s3_bucket
   s3_key        = var.s3_key
   runtime       = "python3.9"

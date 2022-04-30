@@ -1,9 +1,3 @@
-data "archive_file" "apod2" {
-  type        = "zip"
-  source_dir  = "${path.module}/../lambda/package"
-  output_path = "${path.module}/../lambda/package.zip"
-}
-
 resource "aws_s3_bucket" "apod2" {
   bucket        = "apod2"
   force_destroy = true
@@ -12,7 +6,7 @@ resource "aws_s3_bucket" "apod2" {
 resource "aws_s3_object" "apod2" {
   bucket = aws_s3_bucket.apod2.id
   key    = "lambda"
-  source = data.archive_file.apod2.output_path
+  source = "${path.module}/../lambda/package.zip"
 }
 
 resource "aws_iam_role" "apod2" {

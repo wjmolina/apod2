@@ -24,12 +24,11 @@ jobs:
       - name: Prepare Lambda
         run: |
           cd ../lambda
-          pip install --target imports $(<requirements.txt)
-          cd imports
-          zip -r ../imports .
+          pip install --target package $(<requirements.txt)
+          cd package
+          zip -r ../package .
           cd ..
-          zip -g imports *
-          unzip imports -d package
+          zip -g package *
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
