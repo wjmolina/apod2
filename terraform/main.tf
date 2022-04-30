@@ -3,12 +3,19 @@ resource "aws_s3_bucket" "apod2" {
   force_destroy = true
 }
 
-resource "aws_s3_object" "apod2" {
-  for_each = fileset("${path.module}/../lambda", "*/*.py")
+resource "aws_s3_object" "apod2-lambda" {
+  for_each = fileset("../lambda", "*/*.py")
 
   bucket = aws_s3_bucket.apod2.id
   key    = "lambda-${dirname(each.value)}"
-  source = "${path.module}/../lambda/${dirname(each.value)}/package.zip"
+  source = "../lambda/${dirname(each.value)}/package.zip"
+}
+
+resource "aws_s3_object" "apod2-index" {
+  bucket = aws_s3_bucket.apod2.id
+  key    = "index"
+  source = "../index.html"
+  acl    = "public-read"
 }
 
 resource "aws_iam_role" "apod2" {
@@ -31,7 +38,7 @@ resource "aws_apigatewayv2_api" "apod2" {
 }
 
 module "lambda" {
-  for_each = fileset("${path.module}/../lambda", "*/*.py")
+  for_each = fileset("../lambda", "*/*.py")
 
   source = "./lambda"
 

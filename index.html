@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background: #191919;
+            font-family: "Helvetica", sans-serif;
+        }
+
+        img {
+            max-height: 100%;
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const log_url = '{{ host }}/wallpaper/{{ wallpaper }}'
+        let ip
+
+        function readImage() {
+            $.get("{{ image_url }}", (response) => {
+                $("img").prop({
+                    "src": response.image_url,
+                })
+                $("#pita").attr("data-description", `${response.title}\n\n${response.explanation}`)
+            }).fail(() => {
+                $.post(`${log_url}/E${ip ?? 'RROR_READ_IMAGE'}`)
+                $("img").prop({
+                    "src": "../../static/techdiff.gif",
+                })
+            })
+        }
+        function createLog() {
+            if (ip) {
+                $.post(`${log_url}/${ip}`)
+            } else {
+                $.get("https://api.ipify.org/?format=json", (response) => {
+                    ip = response.ip
+                }).fail(() => {
+                    $.post(`${log_url}/ERROR_READ_IP`)
+                })
+            }
+        }
+        $(document).ready(() => {
+            readImage()
+            createLog()
+
+            window.setInterval(() => {
+                readImage()
+            }, +'{{ read_image_interval }}')
+
+            window.setInterval(() => {
+                createLog()
+            }, +'{{ create_log_interval }}')
+
+            window.setInterval(() => {
+                location.reload()
+            }, +'{{ refresh_interval }}')
+        })
+    </script> -->
+</head>
+
+<body>
+    <img src="https://apod.nasa.gov/apod/image/2204/M44-resized1024.jpg">
+</body>
+
+</html>
