@@ -33,6 +33,7 @@ jobs:
               cd ..
             fi
             zip -g package *
+            sha1sum package.zip > package.sha1
             cd ..
           done
       - name: Terraform Init

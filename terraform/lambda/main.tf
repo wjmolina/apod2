@@ -1,10 +1,11 @@
 resource "aws_lambda_function" "apod" {
-  function_name = "apod2-${var.function_name}"
-  s3_bucket     = var.s3_bucket
-  s3_key        = var.s3_key
-  runtime       = "python3.9"
-  handler       = "lambda.handler"
-  role          = var.role
+  function_name    = "apod2-${var.function_name}"
+  s3_bucket        = var.s3_bucket
+  s3_key           = var.s3_key
+  runtime          = "python3.9"
+  handler          = "lambda.handler"
+  role             = var.role
+  source_code_hash = filebase64sha256(file("../lambda/${var.function_name}/package.sha1"))
 }
 
 resource "aws_apigatewayv2_integration" "apod" {
