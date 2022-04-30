@@ -3,6 +3,11 @@ resource "aws_s3_bucket" "apod2" {
   force_destroy = true
 }
 
+resource "aws_s3_bucket_acl" "apod2" {
+  bucket = aws_s3_bucket.apod2.id
+  acl    = "private"
+}
+
 resource "aws_s3_object" "apod2-lambda" {
   for_each = fileset("../lambda", "*/*.py")
 
