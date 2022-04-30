@@ -26,16 +26,8 @@ resource "aws_iam_role" "apod2" {
       Action = "sts:AssumeRole"
       Sid    = ""
       Principal = {
-        Service = "lambda.amazonaws.com"
+        Service = "*"
       }
-      }, {
-      Effect   = "Allow"
-      Action   = "s3:ListBucket"
-      Resource = ["arn:aws:s3:::apod2"]
-    }, {
-      Effect   = "Allow"
-      Action   = "s3:GetObject"
-      Resource = ["arn:aws:s3:::apod2/*"]
     }]
   })
 }
