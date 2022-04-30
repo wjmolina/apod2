@@ -4,9 +4,11 @@ resource "aws_s3_bucket" "apod2" {
 }
 
 resource "aws_s3_object" "apod2" {
+  for_each = fileset("${path.module}/../lambda")
+
   bucket = aws_s3_bucket.apod2.id
-  key    = "lambda"
-  source = "${path.module}/../lambda/package.zip"
+  key    = "lambda-${each.key}"
+  source = "${path.module}/../lambda/${each.key}/package.zip"
 }
 
 resource "aws_iam_role" "apod2" {
@@ -29,13 +31,13 @@ resource "aws_apigatewayv2_api" "apod2" {
 }
 
 module "lambda" {
-  for_each = fileset("${path.module}/../lambda", "*.py")
+  for_each = fileset("${path.module}/../lambda")
 
   source = "./lambda"
 
-  function_name = trimsuffix(each.key, ".py")
+  function_name = trimsuffix(each.key)
   s3_bucket     = aws_s3_bucket.apod2.id
-  s3_key        = aws_s3_object.apod2.key
+  s3_key        = "lambda-${each.key}"
   role          = aws_iam_role.apod2.arn
   api_id        = aws_apigatewayv2_api.apod2.id
   execution_arn = aws_apigatewayv2_api.apod2.execution_arn
