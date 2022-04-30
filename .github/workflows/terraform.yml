@@ -26,6 +26,16 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+      - name: Prepare Lambdas
+        run: |
+          cd ../lambdas
+          pip install --target imports $(<requirements.txt)
+          cd imports
+          zip -r ../imports .
+          cd ..
+          zip -g imports *
+          unzip imports -d package
+
       - name: Terraform Init
         run: terraform init
 

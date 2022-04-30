@@ -15,30 +15,10 @@ provider "aws" {
   region  = "us-east-1"
 }
 
-resource "null_resource" "apod2-create" {
-  triggers = {
-    always_run = timestamp()
-  }
-  provisioner "local-exec" {
-    command = <<EOT
-cd ../lambdas
-pip install --target imports $(<requirements.txt)
-cd imports
-zip -r ../imports .
-cd ..
-zip -g imports *
-unzip imports -d package
-    EOT
-  }
-}
-
 data "archive_file" "apod2" {
   type        = "zip"
   source_dir  = "${path.module}/../lambdas/package"
   output_path = "${path.module}/../lambdas/package.zip"
-  depends_on = [
-    null_resource.apod2-create
-  ]
 }
 
 resource "aws_s3_bucket" "apod2" {
