@@ -35,9 +35,6 @@ jobs:
             zip -g package *
             cd ..
           done
-          ls
-          ls get_image
-          ls get_wallpaper
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan

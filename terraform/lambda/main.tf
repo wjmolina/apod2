@@ -3,7 +3,7 @@ resource "aws_lambda_function" "apod" {
   s3_bucket     = var.s3_bucket
   s3_key        = var.s3_key
   runtime       = "python3.9"
-  handler       = "${var.function_name}.handler"
+  handler       = "lambda.handler"
   role          = var.role
 }
 

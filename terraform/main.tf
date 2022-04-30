@@ -8,7 +8,7 @@ resource "aws_s3_object" "apod2" {
 
   bucket = aws_s3_bucket.apod2.id
   key    = "lambda-${each.value}"
-  source = "${path.module}/../lambda/${each.value}/package.zip"
+  source = "${each.value}/package.zip"
 }
 
 # resource "aws_iam_role" "apod2" {
