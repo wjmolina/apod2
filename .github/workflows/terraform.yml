@@ -35,6 +35,8 @@ jobs:
             zip -g package *
             cd ..
           done
+          apt-get install tree
+          tree
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
