@@ -7,7 +7,7 @@ resource "aws_s3_object" "apod2" {
   for_each = fileset("${path.module}/../lambda", "**.py")
 
   bucket = aws_s3_bucket.apod2.id
-  key    = "lambda-${dirname(each.key)}"
+  key    = "lambda-${each.key}"
   source = "${path.module}/../lambda/${dirname(each.key)}/package.zip"
 }
 
