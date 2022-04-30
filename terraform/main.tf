@@ -34,7 +34,7 @@ resource "aws_iam_policy" "apod2" {
 
 resource "aws_iam_role" "apod2" {
   name                = "terraform-role"
-  managed_policy_arns = [aws_iam_policy.apod2]
+  managed_policy_arns = [aws_iam_policy.apod2.arn]
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
