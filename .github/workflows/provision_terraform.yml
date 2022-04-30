@@ -1,5 +1,5 @@
-name: Terraform
-"on":
+name: Provision Terraform
+on:
   push:
     branches:
       - main

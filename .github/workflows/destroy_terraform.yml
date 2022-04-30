@@ -1,0 +1,22 @@
+name: Destroy Terraform
+on: workflow_dispatch
+jobs:
+  destroy-resources:
+    name: Destroy Resources
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - name: Check Out
+        uses: actions/checkout@v3.0.2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.0
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1.6.1
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      - name: Terraform Destroy
+        run: terraform destroy --auto-approve
