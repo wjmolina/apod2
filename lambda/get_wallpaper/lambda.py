@@ -1,8 +1,7 @@
-import boto3
-
-
 def handler(event, context):
     try:
+        import boto3
+
         s3 = boto3.resource("s3")
         obj = s3.Object("apod2", "index")
         return {
