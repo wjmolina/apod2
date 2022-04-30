@@ -28,7 +28,6 @@ resource "null_resource" "apod2-create" {
       cd ..
       zip -g imports *
       unzip imports -d package
-      rm -r imports imports.zip
     EOT
   }
 }
