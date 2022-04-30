@@ -1,7 +1,7 @@
 data "archive_file" "apod2" {
   type        = "zip"
-  source_dir  = "${path.module}/../lambdas/package"
-  output_path = "${path.module}/../lambdas/package.zip"
+  source_dir  = "${path.module}/../lambda/package"
+  output_path = "${path.module}/../lambda/package.zip"
 }
 
 resource "aws_s3_bucket" "apod2" {
@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "apod2" {
 
 resource "aws_s3_object" "apod2" {
   bucket = aws_s3_bucket.apod2.id
-  key    = "lambdas"
+  key    = "lambda"
   source = data.archive_file.apod2.output_path
 }
 
@@ -35,7 +35,7 @@ resource "aws_apigatewayv2_api" "apod2" {
 }
 
 module "lambda" {
-  for_each = fileset("${path.module}/../lambdas", "*.py")
+  for_each = fileset("${path.module}/../lambda", "*.py")
 
   source = "./lambda"
 

@@ -1,5 +1,5 @@
 name: Terraform
-'on':
+"on":
   push:
     branches:
       - main
@@ -19,11 +19,11 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1.6.1
         with:
           aws-region: us-east-1
-          aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'
-          aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
-      - name: Prepare Lambdas
+          aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      - name: Prepare Lambda
         run: |
-          cd ../lambdas
+          cd ../lambda
           pip install --target imports $(<requirements.txt)
           cd imports
           zip -r ../imports .
@@ -32,5 +32,7 @@ jobs:
           unzip imports -d package
       - name: Terraform Init
         run: terraform init
+      - name: Terraform Plan
+        run: terraform plan
       - name: Terraform Apply
         run: terraform apply --auto-approve
