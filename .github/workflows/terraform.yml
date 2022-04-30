@@ -35,12 +35,12 @@ jobs:
             zip -g package *
             cd ..
           done
+      - name: Terraform Init
+        run: terraform init
       - name: Terraform Console
         run: |
           terraform console
           fileset("${path.module}/../lambda", "**.py")
-      # - name: Terraform Init
-      #   run: terraform init
       # - name: Terraform Plan
       #   run: terraform plan
       # - name: Terraform Apply
