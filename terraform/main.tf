@@ -50,7 +50,7 @@ module "lambda" {
   execution_arn = aws_apigatewayv2_api.apod2.execution_arn
 
   depends_on = [
-    aws_s3_object.apod2
+    aws_s3_object.apod2-lambda
   ]
 }
 
