@@ -66,7 +66,7 @@ resource "aws_apigatewayv2_route" "apod2-get_image" {
 }
 
 module "lambda" {
-  source           = "lambda"
+  source           = "./lambda"
   s3_bucket        = aws_s3_bucket.apod2.id
   s3_key           = aws_s3_object.apod2.key
   function_name    = "create_wallpaper"
